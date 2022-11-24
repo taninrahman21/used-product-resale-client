@@ -10,7 +10,7 @@ import { AuthContext } from '../../contexts/UserContext/UserContext';
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const { login } = useContext(AuthContext);
+  const { login, googleSignIn } = useContext(AuthContext);
   const [loginError, setLoginError] = useState('');
 
 
@@ -25,6 +25,13 @@ const Login = () => {
     .catch(err => {
       setLoginError(err.message);
     })
+  }
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+    .then(result => {
+      console.log(result.user);
+    })
+    .catch(err => console.log(err));
   }
   return (
    <div className=' flex justify-center items-center ' style={{
@@ -49,7 +56,7 @@ const Login = () => {
             <input className='border px-8 py-2 mt-5 bg-[#fd8f5f] text-white' type="submit" value='Login' />
           </div>
           <div className="divider">OR</div>
-          <button className='border px-8 text-[#fd8f5f] py-2 w-full hover:bg-[#fd8f5f] hover:text-white border-[#fd8f5f]'><Link>Continue With Google</Link></button>
+          <button onClick={handleGoogleSignIn} className='border px-8 text-[#fd8f5f] py-2 w-full hover:bg-[#fd8f5f] hover:text-white border-[#fd8f5f]'><Link>Continue With Google</Link></button>
     </form>
     </div>
    </div>
