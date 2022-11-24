@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/UserContext/UserContext';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const {user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut().then(() => {console.log('logOut SuccessFull')}).catch(err => console.log(err));
+  } 
   return (
     <div className="sticky top-0 border-b">
       {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <nav className="bg-[#f2e1d9] border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
         <div className="flex flex-wrap justify-between items-center w-5/6 mx-auto">
           <Link to="/" className="text-3xl">
-            Eleanor Atwood
+            BecheDaw.com
           </Link>
           <button
             onClick={() => setOpen(!open)}
@@ -50,6 +57,16 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
+             {
+              user ? <li onClick={handleLogout}>Logout</li> : <li>
+                 <Link
+                  to="/login"
+                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                 Login
+                </Link>
+              </li>
+             }
              </ul>
           </div>
         </div>

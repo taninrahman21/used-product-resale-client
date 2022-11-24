@@ -1,14 +1,31 @@
 import React from 'react';
+import { useState } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import img from '../../assets/banner.png';
+import { AuthContext } from '../../contexts/UserContext/UserContext';
 
-const handleLogin = data => {
-  console.log(data)
-}
+
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
+  const { login } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState('');
+
+
+  const handleLogin = data => {
+    setLoginError('');
+    console.log(data)
+    login(data.email, data.password)
+    .then(result => {
+      const user = result.user;
+      console.log(user);
+    })
+    .catch(err => {
+      setLoginError(err.message);
+    })
+  }
   return (
    <div className=' flex justify-center items-center ' style={{
     background: `url(${img})`,
@@ -26,6 +43,7 @@ const Login = () => {
           <label className='label'>Password</label>
           <input className='border p-3 w-full' {...register("password")} placeholder='Password'/>
           <label className="label text-[#fd8f5f]">Forgot Password?</label>
+          <p className='my-2 text-red-600'>{loginError}</p>
           <div className='flex justify-between items-center'>
             <p className='mt-3'>New to BecheDaw.com? <Link className='text-[#fd8f5f]' to='/signup'>Create an account.</Link></p>
             <input className='border px-8 py-2 mt-5 bg-[#fd8f5f] text-white' type="submit" value='Login' />

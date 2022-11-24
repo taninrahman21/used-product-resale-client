@@ -1,12 +1,26 @@
 import React from 'react';
+import { useState } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import img from '../../assets/banner.png';
+import { AuthContext } from '../../contexts/UserContext/UserContext';
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
+  const {createUser} = useContext(AuthContext);
+  const [signupError, setSignupError] = useState('');
+
   const handleSignup = data => {
     console.log(data);
+    createUser(data.email, data.password)
+    .then(result => {
+      const user = result.user;
+      console.log(user);
+    })
+    .catch(error => {
+      setSignupError(error.message);
+    });
   }
   return (
    <div className=' flex justify-center items-center ' style={{
@@ -21,7 +35,10 @@ const Signup = () => {
       </div>
      <form onSubmit={handleSubmit(handleSignup)} className='mt-4'>          
           <label className='label'>Full Name</label>
-          <input className='border p-3 mb-3 w-full' {...register("name")} placeholder='Enter Full Name'/>
+          <input className='border p-3 mb-3 w-full'
+           {...register("name")} 
+           
+           placeholder='Enter Full Name'/>
           <label className='label'>Email Address</label>
           <input className='border p-3 mb-3 w-full' {...register("email")} placeholder='Enter Email Address'/>
           <label className='label'>Who you are?</label>
