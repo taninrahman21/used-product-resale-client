@@ -2,7 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/banner.png';
 import { AuthContext } from '../../contexts/UserContext/UserContext';
 import saveUser from '../Shared/SaveUser/SaveUser';
@@ -11,18 +12,19 @@ const Signup = () => {
   const { register, handleSubmit } = useForm();
   const {createUser, googleSignIn, updateUser, logOut } = useContext(AuthContext);
   const [signupError, setSignupError] = useState('');
+  const navigate = useNavigate();
 
   const handleSignup = data => {
     setSignupError('');
     createUser(data.email, data.password)
     .then(result => {
-      const user = result.user;
       // console.log(user);
-      const profile = {display: data.name}
+      const profile = {displayName: data.name}
       updateUser(profile)
       .then(() => {
         saveUser(data.name, data.email, data.role);
         logOut();
+        navigate('/login');
       })
       .catch(err => console.log(err));      
       

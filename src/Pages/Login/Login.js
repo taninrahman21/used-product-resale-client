@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/banner.png';
 import { AuthContext } from '../../contexts/UserContext/UserContext';
@@ -20,7 +21,8 @@ const Login = () => {
     setLoginError('');
     login(data.email, data.password)
     .then(result => {
-      const user = result.user;
+      toast.success('Successfully Login');
+      navigate('/home');
     })
     .catch(err => {
       setLoginError(err.message);
@@ -32,7 +34,7 @@ const Login = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
-      navigate('/');
+      navigate('/home');
     })
     .catch(err => console.log(err));
   }
