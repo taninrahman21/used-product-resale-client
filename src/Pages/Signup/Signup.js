@@ -5,18 +5,27 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import img from '../../assets/banner.png';
 import { AuthContext } from '../../contexts/UserContext/UserContext';
+import saveUser from '../Shared/SaveUser/SaveUser';
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
-  const {createUser, googleSignIn} = useContext(AuthContext);
+  const {createUser, googleSignIn, updateUser, logOut } = useContext(AuthContext);
   const [signupError, setSignupError] = useState('');
 
   const handleSignup = data => {
-    console.log(data);
+    setSignupError('');
     createUser(data.email, data.password)
     .then(result => {
       const user = result.user;
-      console.log(user);
+      // console.log(user);
+      const profile = {display: data.name}
+      updateUser(profile)
+      .then(() => {
+        saveUser(data.name, data.email, data.role);
+        logOut();
+      })
+      .catch(err => console.log(err));      
+      
     })
     .catch(error => {
       setSignupError(error.message);
@@ -25,9 +34,13 @@ const Signup = () => {
   const handleGoogleSignIn = () => {
     googleSignIn()
     .then(result => {
-      console.log(result.user);
+      const user = result.user;
+      const role = 'Buyer';
+      saveUser(user.displayName, user.email, role);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      setSignupError(err.message);
+    });
   }
   return (
    <div className=' flex justify-center items-center ' style={{
@@ -55,6 +68,7 @@ const Signup = () => {
           </select>
           <label className='label'>Password</label>
           <input type='password' className='border p-3 w-full' {...register("password")} placeholder='Enter Password'/>
+          <p className='text-red-600 my-2'>{signupError}</p>
           <div className='flex justify-between items-center'>
             <p className='mt-3'>Already have an account? <Link className='text-[#fd8f5f]' to='/login'>Login.</Link></p>
             <input className='border px-8 py-2 mt-5 bg-[#fd8f5f] text-white' type="submit" value='Sign Up' />

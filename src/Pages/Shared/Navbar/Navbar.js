@@ -12,7 +12,6 @@ const Navbar = () => {
   } 
   return (
     <div className="sticky top-0 border-b">
-      {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <nav className="bg-[#f2e1d9] border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
         <div className="flex flex-wrap justify-between items-center w-5/6 mx-auto">
           <Link to="/" className="text-3xl">

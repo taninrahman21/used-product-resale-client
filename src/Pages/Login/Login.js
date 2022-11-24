@@ -2,9 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/banner.png';
 import { AuthContext } from '../../contexts/UserContext/UserContext';
+import saveUser from '../Shared/SaveUser/SaveUser';
 
 
 
@@ -12,15 +13,14 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const { login, googleSignIn } = useContext(AuthContext);
   const [loginError, setLoginError] = useState('');
+  const navigate = useNavigate();
 
 
   const handleLogin = data => {
     setLoginError('');
-    console.log(data)
     login(data.email, data.password)
     .then(result => {
       const user = result.user;
-      console.log(user);
     })
     .catch(err => {
       setLoginError(err.message);
@@ -29,7 +29,10 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     googleSignIn()
     .then(result => {
-      console.log(result.user);
+      const user = result.user;
+      const role = 'Buyer';
+      saveUser(user.displayName, user.email, role);
+      navigate('/');
     })
     .catch(err => console.log(err));
   }
