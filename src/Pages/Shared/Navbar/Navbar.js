@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/UserContext/UserContext';
 
@@ -8,7 +9,7 @@ const Navbar = () => {
   const {user, logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
-    logOut().then(() => {console.log('logOut SuccessFull')}).catch(err => console.log(err));
+    logOut().then(() => {toast.success('Successfully Logout')}).catch(err => console.log(err));
   } 
   return (
     <div className="sticky top-0 border-b">
@@ -56,8 +57,13 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
+              {
+                user?.uid && <li><Link to="/dashboard"
+                 className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+               >Dashboard</Link></li>
+              }
              {
-              user ? <li onClick={handleLogout}>Logout</li> : <li>
+              user ? <li className='block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' onClick={handleLogout}>Logout</li> : <li>
                  <Link
                   to="/login"
                   className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
