@@ -22,25 +22,23 @@ const MyOrders = () => {
   console.log(myorders);
   return (
     <div className="my-10">
-      <div className="overflow-x-auto w-full">
-        <table className="table w-full">
-          {/* <!-- head --> */}
-          <thead>
+      {
+       myorders.length === 0 ? <p>You didn't book any products.</p>
+       :     <div className="overflow-x-auto w-full">
+       <table className="table w-full">
+         {/* <!-- head --> */}
+         <thead>
+           <tr>
+             <th>Product</th>
+             <th>Price</th>
+             <th>Location</th>
+             <th>Pay/Delete</th>
+           </tr>
+         </thead>
+        {myorders.map(order =>  <tbody>
             <tr>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Location</th>
-              <th>Pay/Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {myorders.length === 0 ? (
-              <p>Yoy didn't book any product.</p>
-            ) : (
-              myorders.map((order) => (
-                <tr>
-                  <td>
-                    <div className="flex items-center space-x-3">
+               <td>
+                  <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
                           <img src={order.productImg} alt="" />
@@ -65,11 +63,10 @@ const MyOrders = () => {
                     </button>
                   </th>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+          </tbody>)}
+       </table>
+     </div>
+      }
     </div>
   );
 };
