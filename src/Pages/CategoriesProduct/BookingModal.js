@@ -12,7 +12,7 @@ const BookingModal = ({product, setProduct}) => {
     const form = event.target;
     const productName = name;
     const productPrice = description.resalePrice;
-    const UserEmail = form.email.value;
+    const userEmail = form.email.value;
     const userName = form.name.value;
     const userPhone = form.phone.value;
     const userLocation = form.location.value;
@@ -20,8 +20,9 @@ const BookingModal = ({product, setProduct}) => {
     const bookedProduct = {
       productName,
       productId: product._id,
+      productImg: product.img,
       userName,
-      UserEmail, 
+      userEmail, 
       userLocation,
       productPrice,
       userPhone
