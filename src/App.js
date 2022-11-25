@@ -3,15 +3,15 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import DashboardLayout from './Layout/DashboardLayout';
 import Main from './Layout/Main';
-import AddProduct from './Pages/AddProduct/AddProduct';
-import AllBuyer from './Pages/AllBuyer/AllBuyer';
-import AllSeller from './Pages/AllSeller/AllSeller';
+import AddProduct from './Pages/Dashboard/AddProduct/AddProduct';
+import AllBuyer from './Pages/Dashboard/AllBuyer/AllBuyer';
+import AllSeller from './Pages/Dashboard/AllSeller/AllSeller';
 import CategoriesProduct from './Pages/CategoriesProduct/CategoriesProduct';
 import MyOrders from './Pages/Dashboard/MyOrders/MyOrders';
 import Home from './Pages/Home/Home/Home';
 import Login from './Pages/Login/Login';
 import MyProducts from './Pages/MyProducts/MyProducts';
-import ReportedProducts from './Pages/ReportedProducts/ReportedProducts';
+import ReportedProducts from './Pages/Dashboard/ReportedProducts/ReportedProducts';
 import Signup from './Pages/Signup/Signup';
 
 function App() {
