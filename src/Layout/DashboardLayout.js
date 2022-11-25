@@ -2,23 +2,32 @@ import React from "react";
 import { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../contexts/UserContext/UserContext";
-import useSeller from "../hooks/useSeller";
+import useUserRole from "../hooks/useUserRole";
 
 const DashboardLayout = () => {
   const {user} = useContext(AuthContext);
-  const [isSeller] = useSeller(user?.email);
+  const [isSeller, isBuyer, isAdmin] = useUserRole(user?.email);
   return (
     <div className="flex">
       <div className="w-[25%] border pl-16">
         <ul>
            {
-            !isSeller && <li><Link className="text-xl font-semibold" to="/dashboard/myorders">My Orders</Link></li>
+            isBuyer && <li><Link className="text-xl font-semibold" to="/dashboard/my-orders">My Orders</Link></li>
            }
            {
-            isSeller && <li><Link className="text-xl font-semibold" to="/dashboard/myproducts">My Products</Link></li>
+            isSeller && <li><Link className="text-xl font-semibold" to="/dashboard/my-products">My Products</Link></li>
            }
            {
-            isSeller && <li><Link className="text-xl font-semibold" to="/dashboard/addproducts">Add Products</Link></li>
+            isSeller && <li><Link className="text-xl font-semibold" to="/dashboard/add-products">Add Products</Link></li>
+           }
+           {
+            isAdmin && <li><Link className="text-xl font-semibold" to="/dashboard/all-seller">All Seller</Link></li>
+           }
+           {
+            isAdmin && <li><Link className="text-xl font-semibold" to="/dashboard/all-buyer">All Buyer</Link></li>
+           }
+           {
+            isAdmin && <li><Link className="text-xl font-semibold" to="/dashboard/reported-products">Reported Products</Link></li>
            }
         </ul>
       </div>
