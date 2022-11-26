@@ -9,13 +9,14 @@ const Product = ({product, setProduct}) => {
       <img className='w-full h-[300px]' src={img} alt="" />
       <h2 className='text-xl font-semibold mt-3'>Device Name: {name}</h2>
       <p className='text-xl font-bold'>Price: {description.resalePrice}</p>
-      <h1 className='text-xl font-semibold'>Seller: {description.seller}</h1>
+      <h1 className='text-xl font-semibold'>Seller: {description.sellerName}</h1>
       <p className='text-base font-semibold'>Posted on: {description.date}</p>
       <p className='text-base font-semibold'>Location: {description.location}</p>
       <p className='text-primary hover:underline mb-3' onClick={() => setSeeDetails(!seeDetails)}>See Details....</p>
       <div className={seeDetails ? '' : 'hidden'}>
         <p className='text-base font-semibold'>Original Price: {description.originalPrice}</p>
-        <p className='text-base font-semibold mb-5'>Age of use: {description.yearsOfUse}</p>
+        <p className='text-base font-semibold'>Age of use: {description.yearsOfUse}</p>
+        <p className='text-base font-semibold mb-5'>Seller Email: {description.sellerEmail}</p>
       </div>
       <label
          htmlFor="booking-modal"
