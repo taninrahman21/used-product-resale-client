@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthProvider';
-import useAdmin from '../../hooks/useAdmin';
+import { AuthContext } from '../../contexts/UserContext/UserContext';
+import useUserRole from '../../hooks/useUserRole';
 import Loading from '../../Pages/Shared/Loading/Loading';
 
 const AdminRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContext);
-    const [isAdmin, isAdminLoading] = useAdmin(user?.email);
+    const [isAdmin, isUserRoleLoading] = useUserRole(user?.email);
     const location = useLocation();
 
-    if (loading || isAdminLoading) {
+    if (loading && isUserRoleLoading) {
         return <Loading></Loading>
     }
 

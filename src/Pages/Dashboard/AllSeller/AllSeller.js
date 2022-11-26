@@ -27,7 +27,7 @@ const AllSeller = () => {
              <th>Pay/Delete</th>
            </tr>
          </thead>
-        {allSellers.map(seller =>  <tbody>
+        {allSellers.map(seller =>  <tbody key={seller._id}>
             <tr>
                  <td>
                   <div className="font-bold">{seller.name}</div>

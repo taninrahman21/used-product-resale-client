@@ -12,15 +12,15 @@ const useUserRole = email => {
     fetch(`http://localhost:5000/users/userrole/${email}`)
     .then(res => res.json())
     .then(data => {
+      if(data){
+        setIsUserRoleLoading(false);
+      }
       if(data.userRole === "Seller"){
         setIsSeller(true);
-        setIsUserRoleLoading(false);
       } else if(data.userRole === "Admin"){
         setIsAdmin(true);
-        setIsUserRoleLoading(false);
       } else{
         setIsBuyer(true);
-        setIsUserRoleLoading(false);
       }
     })
   }}, [email])

@@ -2,14 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/banner.png';
 import { AuthContext } from '../../contexts/UserContext/UserContext';
 import saveUser from '../Shared/SaveUser/SaveUser';
 
 const Signup = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const {createUser, googleSignIn, updateUser, logOut } = useContext(AuthContext);
   const [signupError, setSignupError] = useState('');
   const navigate = useNavigate();
@@ -57,19 +56,27 @@ const Signup = () => {
       </div>
      <form onSubmit={handleSubmit(handleSignup)} className='mt-4'>          
           <label className='label'>Full Name</label>
-          <input className='border p-3 mb-3 w-full'
-           {...register("name")} 
-           
+          <input className='border p-3 w-full'
+           {...register("name", {required: "Full name is required."})}
            placeholder='Enter Full Name'/>
+           {errors.name && <p className='text-red-600'>{errors.name?.message}</p>}
+
           <label className='label'>Email Address</label>
-          <input className='border p-3 mb-3 w-full' {...register("email")} placeholder='Enter Email Address'/>
+          <input className='border p-3 w-full' 
+          {...register("email", {required: "Email Address is required."})}
+           placeholder='Enter Email Address'/>
+          {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
+
           <label className='label'>Who you are?</label>
           <select {...register('role')} className="select select-bordered w-full">
             <option defaultValue>Buyer</option>
             <option>Seller</option>
           </select>
+
           <label className='label'>Password</label>
-          <input type='password' className='border p-3 w-full' {...register("password")} placeholder='Enter Password'/>
+          <input type='password' className='border p-3 w-full' {...register("password", {required: "Password is required.",
+         minLength: { value: 6, message: 'Password must be 6 characters or longer' }})} placeholder='Enter Password'/>
+          {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
           <p className='text-red-600 my-2'>{signupError}</p>
           <div className='flex justify-between items-center'>
             <p className='mt-3'>Already have an account? <Link className='text-[#fd8f5f]' to='/login'>Login.</Link></p>

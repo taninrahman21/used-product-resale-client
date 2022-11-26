@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/banner.png';
 import { AuthContext } from '../../contexts/UserContext/UserContext';
 import saveUser from '../Shared/SaveUser/SaveUser';
@@ -11,10 +11,13 @@ import saveUser from '../Shared/SaveUser/SaveUser';
 
 
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { login, googleSignIn } = useContext(AuthContext);
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/';
 
 
   const handleLogin = data => {
@@ -22,7 +25,7 @@ const Login = () => {
     login(data.email, data.password)
     .then(result => {
       toast.success('Successfully Login');
-      navigate('/home');
+      navigate(from, {replace: true});
     })
     .catch(err => {
       setLoginError(err.message);
@@ -34,7 +37,7 @@ const Login = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
-      navigate('/home');
+      navigate(from, {replace: true});
     })
     .catch(err => console.log(err));
   }
@@ -51,9 +54,17 @@ const Login = () => {
       </div>
      <form onSubmit={handleSubmit(handleLogin)} className='mt-4'>          
           <label className='label'>Email Address</label>
-          <input className='border p-3 mb-3 w-full' {...register("email")} placeholder='Email Address'/>
+          <input className='border p-3 mb-3 w-full' {...register("email",
+          {required: "Email Address is required."}
+          )} placeholder='Email Address'/>
+          {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
+
           <label className='label'>Password</label>
-          <input className='border p-3 w-full' {...register("password")} placeholder='Password'/>
+          <input className='border p-3 w-full' {...register("password",
+          {required: "Password is required."}
+          )} placeholder='Password'/>
+          {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
+
           <label className="label text-[#fd8f5f]">Forgot Password?</label>
           <p className='my-2 text-red-600'>{loginError}</p>
           <div className='flex justify-between items-center'>

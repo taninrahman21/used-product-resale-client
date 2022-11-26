@@ -35,7 +35,7 @@ const MyOrders = () => {
              <th>Pay/Delete</th>
            </tr>
          </thead>
-        {myorders.map(order =>  <tbody>
+        {myorders.map(order =>  <tbody key={order._id}>
             <tr>
                <td>
                   <div className="flex items-center space-x-3">

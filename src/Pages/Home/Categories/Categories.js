@@ -2,9 +2,10 @@ import React from 'react';
 import img1 from '../../../assets/apple.jpeg';
 import img2 from '../../../assets/samsung.jpg';
 import img3 from '../../../assets/oppo.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Categories = () => {
+  const location = useLocation();
   const categories = [
     {id: 1, name: 'Apple', img: img1},
     {id: 2, name: 'Samsung', img: img2},
@@ -17,7 +18,7 @@ const Categories = () => {
         {
             categories.map(category => <div className='border rounded-sm px-5 py-3' key={category.id}>
               <img className='w-full h-[200px]' src={category.img} alt="categoryImage" />
-              <h2 className='text-3xl font-semibold mt-2'><Link to={`/category/${category.name}`}>{category.name}</Link></h2>
+              <h2 className='text-3xl font-semibold mt-2'><Link to={`/category/${category.name}`} state={{ from: location }} replace>{category.name}</Link></h2>
               </div>)
           }
      </div>
