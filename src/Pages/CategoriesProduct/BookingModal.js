@@ -88,12 +88,18 @@ const BookingModal = ({product, setProduct}) => {
             placeholder="Phone Number"
             className="input input-bordered w-full mb-5"
             required/>
-          <input
-            type="text"
-            name="location"
-            placeholder="Your Location"
-            className="input input-bordered w-full mb-5"
-            required/>
+
+          <select  name="location"  className="input input-bordered w-full mb-5">
+            <option defaultValue>Dhaka</option>
+            <option>Gazipur</option>
+            <option>Bogura</option>
+            <option>Chittagong</option>
+            <option>Barishal</option>
+            <option>Dinajpur</option>
+            <option>Thakurgaon</option>
+            <option>Kurigram</option>
+            <option>Rangpur</option>
+          </select>
           <input type="submit" className="border px-8 py-2 mt-5 bg-[#fd8f5f] text-white w-full" value="Submit" />
          </form>
         </div>
