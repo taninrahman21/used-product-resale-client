@@ -1,16 +1,27 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-// import { useContext } from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheckCircle } from 'react-icons/fa';
-// import { AuthContext } from '../../contexts/UserContext/UserContext';
-// import Loading from '../Shared/Loading/Loading';
+import Loading from '../Shared/Loading/Loading';
 
 const Product = ({product, setProduct}) => {
-  // const {user} = useContext(AuthContext);
-  console.log(product);
   const {name, img, description, sellerEmail, sellerName } = product;
   const [seeDetails, setSeeDetails] = useState(false);
+
+  const {data , isLoading } = useQuery({
+    queryKey: ['productSeller', sellerEmail],
+    queryFn: async() => {
+      const res = await fetch(`http://localhost:5000/users/seller/${sellerEmail}`);
+      const data = await res.json();
+      return data;
+    }
+  })
+  console.log(data);
+
+  if(isLoading){
+    return <Loading></Loading>;
+  }
 
   const handleReport = id => {
     fetch(`http://localhost:5000/products/reported/${id}`, {
@@ -36,7 +47,7 @@ const Product = ({product, setProduct}) => {
       <div className='flex items-center'>
          <div className="font-bold text-xl">Seller: {sellerName}</div>
          {
-            product?.userVerification && <div className="font-bold"><FaCheckCircle className='text-green-700 ml-1 text-xl'/></div>
+            data?.verified && <div className="font-bold"><FaCheckCircle className='text-green-700 ml-1 text-xl'/></div>
           }
       </div>
       <p className='text-base font-semibold'>Posted on: {description.date}</p>

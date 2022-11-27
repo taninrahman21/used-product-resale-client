@@ -27,7 +27,7 @@ const AllBuyer = () => {
   }
 
   return (
-    <div className='my-10'>
+    <div className=''>
     <div className="overflow-x-auto w-full">
      <table className="table w-full">
        {/* <!-- head --> */}

@@ -1,13 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheckCircle } from 'react-icons/fa';
-import { AuthContext } from '../../../contexts/UserContext/UserContext';
 import Loading from '../../Shared/Loading/Loading';
 
 const AllSeller = () => {
-  const { removeUser } = useContext(AuthContext);
   const {data: allSellers = [], isLoading, refetch} = useQuery({
     queryKey: ['allSellers'],
     queryFn: async() => {
@@ -16,6 +13,7 @@ const AllSeller = () => {
       return data;
     }
   })
+  
   // Varify the user
   const handleVarify = id => {
     fetch(`http://localhost:5000/users/${id}`, {
@@ -49,7 +47,7 @@ const AllSeller = () => {
     return <Loading></Loading>
   }
   return (
-    <div className='my-10'>
+    <div className=''>
       <div className="overflow-x-auto w-full">
        <table className="table w-full">
          {/* <!-- head --> */}

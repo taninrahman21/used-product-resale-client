@@ -32,7 +32,7 @@ const ReportedProducts = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className='w-full my-14'>
+    <div className='w-full'>
     {
       reportedProducts.length === 0 ? <p className='text-3xl text-[#fd8f5f] my-10'>Don't have any reported products.</p>
       :  <div className="overflow-x-auto w-[140%] lg:w-full">
