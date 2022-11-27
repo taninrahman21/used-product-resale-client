@@ -47,14 +47,18 @@ const Product = ({product, setProduct}) => {
         <p className='text-base font-semibold'>Age of use: {description.yearsOfUse}</p>
         <p className='text-base font-semibold mb-5'>Seller Email: {sellerEmail}</p>
       </div>
-      <div className=''>
-      <label
+      <div className='flex justify-between items-center'>
+        <div>
+        <label
          htmlFor="booking-modal"
-         className='border px-8 py-2 mt-5 bg-[#fd8f5f] text-white'
+         className='border px-8 py-2 bg-[#fd8f5f] text-white'
          onClick={() => setProduct(product)}
          >Book Now</label>
-         <p onClick={() => handleReport(product._id)} className='btn ml-24 border-none btn-sm px-4 py-1  bg-red-600 text-white'>
-          Report</p>
+        </div>
+         <div>
+         <button onClick={() => handleReport(product._id)} className='border px-8 py-2 bg-red-600 text-white'>
+          Report</button>
+         </div>
       </div>
     </div>
   );

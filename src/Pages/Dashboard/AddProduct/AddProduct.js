@@ -1,83 +1,69 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { FileUploader } from "react-drag-drop-files";
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useContext } from 'react';
 import { AuthContext } from '../../../contexts/UserContext/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
 
 const AddProduct = () => {
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const [imageFile, setimageFile] = useState(null);
-  const [imageFileError, setImageFileError] = useState('');
   const {user} = useContext(AuthContext);
   const navigate = useNavigate();
 
-
-
-  const fileTypes = ["JPG", "PNG", "GIF"];
-  const handleChange = (file) => {
-    setimageFile(file);
-  }
   const handleAddProduct = data => {
-    if(!imageFile){
-      setImageFileError("Image is required");
-    } else {
-      setImageFileError('');
-      const imageHostKey = process.env.REACT_APP_image_key;
-      const formData = new FormData();
-      formData.append('image', imageFile);
-      
-      fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
-        method: 'POST',
-        body: formData
-      })
-      .then(res => res.json())
-      .then(imgData => {
-        if(imgData.success) {
-          const newProduct = {
-            name: data.productName,
-            img: imgData.data.url,
-            brand: data.brand,
-            sellerName:"Md Tanin Rahman",
-            sellerEmail: data.email,
-            userVerification: null,
-            description: {
-              resalePrice: data.resalePrice,
-              originalPrice: data.originalPrice,
-              yearsOfUse: data.ageOfUse,
-              location: data.location,
-              date: format(new Date(), "PP")
-            }
+    const image = data.image[0];
+    const imageHostKey = process.env.REACT_APP_image_key;
+    const formData = new FormData();
+    formData.append('image', image);
+
+    fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(imgData => {
+      if(imgData.success){
+        const newProduct = {
+          name: data.productName,
+          img: imgData.data.url,
+          brand: data.brand,
+          sellerName:"Md Tanin Rahman",
+          sellerEmail: data.email,
+          userVerification: null,
+          description: {
+            resalePrice: data.resalePrice,
+            originalPrice: data.originalPrice,
+            yearsOfUse: data.ageOfUse,
+            location: data.location,
+            date: format(new Date(), "PP")
           }
-          
-          // Post add product to DB
+        };
+
+         // Post add product to DB
           fetch('http://localhost:5000/products', {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
             },
             body: JSON.stringify(newProduct)
-          }).then(res => res.json())
+          })
+          .then(res => res.json())
           .then(data => {
             if(data.acknowledged){
               toast.success('Product added successfully.');
               navigate('/dashboard/my-products');
             }
           })
-          console.log(newProduct);
-        }
-      })
       }
-    };
+    })
+  }    
 
   return (
-      <div className='w-full my-12 p-10'>
+      <div className='w-full mx-auto lg:p-10'>
       <div className='text-center'>
-        <h2 className='text-3xl font-bold'>Add A Product</h2>
+        <h2 className='text-2xl lg:text-3xl font-bold'>Add A Product</h2>
         <p className='text-sm text-gray-500 mt-3'>Enter product details to add product</p>
       </div>
      <form onSubmit={handleSubmit(handleAddProduct)} className='mt-4'>          
@@ -126,8 +112,10 @@ const AddProduct = () => {
           </select>
           {errors.ageOfUse && <p className='text-red-600'>{errors.ageOfUse?.message}</p>}
 
-            <FileUploader handleChange={handleChange} name="file" types={fileTypes}/>
-            {<p className='text-red-600 mb-3'>{imageFileError}</p>}
+          <input type="file"
+          {...register('image', {required: "Image is required"})}
+          className="file-input file-input-bordered w-full max-w-xs" />
+          {errors.image && <p className='text-red-600'>{errors.image?.message}</p>}
 
           <div className='flex justify-between items-center'>
             <input className='border px-8 py-2 mt-5 bg-[#fd8f5f] text-white' type="submit" value='Add Product' />

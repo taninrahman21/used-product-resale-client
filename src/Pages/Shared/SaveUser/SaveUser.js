@@ -13,7 +13,7 @@ const saveUser = (name, email, role) => {
   .then(data => {
     console.log(data);
     if(data.acknowledged){
-      toast.success('User Added Succesfully');
+      toast.success('User Create Succesfully');
     }
   });
 }

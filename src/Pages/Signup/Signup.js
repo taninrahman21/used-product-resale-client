@@ -49,7 +49,7 @@ const Signup = () => {
     backgroundPosition: 'center',
     backgroundSize: 'cover'
    }}>
-     <div className='w-2/5 my-16 mx-auto p-10 bg-white'>
+     <div className='w-5/6 md:w-3/5 lg:w-2/5 my-10 md:my-16  mx-auto p-6 md:p-10 bg-white'>
       <div className='text-center'>
         <h2 className='text-3xl font-bold'>Sign Up</h2>
         <p className='text-sm text-gray-500 mt-3'>Enter SignUp details to get access</p>
@@ -78,9 +78,9 @@ const Signup = () => {
          minLength: { value: 6, message: 'Password must be 6 characters or longer' }})} placeholder='Enter Password'/>
           {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
           <p className='text-red-600 my-2'>{signupError}</p>
-          <div className='flex justify-between items-center'>
+          <div className='flex justify-between items-center flex-col-reverse md:flex-row'>
             <p className='mt-3'>Already have an account? <Link className='text-[#fd8f5f]' to='/login'>Login.</Link></p>
-            <input className='border px-8 py-2 mt-5 bg-[#fd8f5f] text-white' type="submit" value='Sign Up' />
+            <input className='border px-8 py-2 mt-5 bg-[#fd8f5f] text-white w-full md:w-fit' type="submit" value='Sign Up' />
           </div>
           <div className="divider">OR</div>
           <button onClick={handleGoogleSignIn} className='border text-[#fd8f5f] px-8 py-2 w-full hover:bg-[#fd8f5f] hover:text-white border-[#fd8f5f]'><Link>Continue With Google</Link></button>

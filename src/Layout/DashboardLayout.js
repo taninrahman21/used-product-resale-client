@@ -8,12 +8,12 @@ import { FaBan, FaBars, FaCartPlus, FaShoppingBag, FaShoppingCart, FaUsers } fro
 const DashboardLayout = () => {
   const {user} = useContext(AuthContext);
   const [isSeller, isBuyer, isAdmin] = useUserRole(user?.email);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="flex">
-      <div className={`${open ? 'w-[280px]' : 'w-[50px] lg:w-[150px]'} border pl-3 lg:pl-16 bg-gray-200 duration-1000 ease-in`}>
-        <div className="sticky top-5">
+      <div className={`${open ? 'w-[290px]' : 'w-[55px] lg:w-[150px]'} border pl-3 lg:pl-16 bg-gray-200 duration-1000 ease-in`}>
+        <div className="sticky top-5 pl-2">
           <div className=" mt-5">
             <FaBars className="text-2xl" onClick={() => setOpen(!open)}/>
           </div>
@@ -21,7 +21,7 @@ const DashboardLayout = () => {
            {
             isBuyer && <li><Link className="flex mb-3 items-center text-xl font-semibold" to="/dashboard/my-orders">
               <div><FaShoppingCart className='text-2xl'/></div>
-              <div  className={`ml-3 ${open ? 'hidden' : 'block'}`}>My Orders</div></Link></li>
+              <div  className={`ml-3 ${open ? 'block' : 'hidden'}`}>My Orders</div></Link></li>
            }
            {
             isSeller && <li><Link className="flex mb-3 items-center text-xl font-semibold" to="/dashboard/my-products"><div>
@@ -48,7 +48,7 @@ const DashboardLayout = () => {
         </div>
       </div>
 
-      <div className="w-3/5 pl-12">
+      <div className="w-10/12 lg:w-3/5 mx-auto lg:mx-0 p-6 lg:pl-12 my-8">
         <Outlet></Outlet>
       </div>
       

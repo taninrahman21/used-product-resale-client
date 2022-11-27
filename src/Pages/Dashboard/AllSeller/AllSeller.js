@@ -75,9 +75,11 @@ const AllSeller = () => {
                   </td>
                   <td>{seller.role}</td>
                   <th>
-                    <button disabled={seller?.verified} onClick={() => handleVarify(seller._id)} className="btn btn-sm bg-green-500 mr-2 border-none">
-                      {seller?.verified ? "Varified" : "Varify"}
+                    {
+                      !seller?.verified && <button onClick={() => handleVarify(seller._id)} className="btn btn-sm bg-green-500 mr-2 border-none">
+                      Varify
                     </button>
+                    }
                     <button onClick={() => handleDelete(seller._id)} className="btn btn-sm bg-red-500 border-none">
                       Delete
                     </button>

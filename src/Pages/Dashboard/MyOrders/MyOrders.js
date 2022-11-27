@@ -16,12 +16,15 @@ const MyOrders = () => {
       return data;
     },
   });
+  const handleDelete = id => {
+    console.log("delted");
+  }
   if (isLoading) {
     return <Loading></Loading>;
   }
   console.log(myorders);
   return (
-    <div className="my-10">
+    <div className="my-10 pr-8">
       {
        myorders.length === 0 ? <p>You didn't book any products.</p>
        :     <div className="overflow-x-auto w-full">
@@ -58,7 +61,7 @@ const MyOrders = () => {
                     <button className="btn btn-sm bg-green-500 mr-2 border-none">
                       Pay
                     </button>
-                    <button className="btn btn-sm bg-red-500 border-none">
+                    <button onClick={handleDelete} className="btn btn-sm bg-red-500 border-none">
                       Delete
                     </button>
                   </th>
