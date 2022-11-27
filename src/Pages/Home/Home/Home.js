@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import BookingModal from '../../CategoriesProduct/BookingModal';
 import Loading from '../../Shared/Loading/Loading';
+import Achivement from '../Achivement/Achivement';
 import AdvertiseItems from '../AdvertiseItems/AdvertiseItems';
 import Banner from '../Banner/Banner';
 import Categories from '../Categories/Categories';
@@ -32,6 +33,7 @@ const Home = () => {
       }
       <Categories></Categories>
      { product && <BookingModal product={product}></BookingModal>}
+     <Achivement></Achivement>
     </div>
   );
 };
