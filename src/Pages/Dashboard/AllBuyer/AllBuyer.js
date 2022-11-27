@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const AllBuyer = () => {
   const [allBuyers, setAllBuyers] = useState([]);
@@ -9,6 +10,21 @@ const AllBuyer = () => {
     .then((response) => {
       setAllBuyers(response.data)});
   }, [])
+
+
+  const handleDelete = id => {
+    fetch(`http://localhost:5000/users/${id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.deletedCount > 0){
+        const remainingBuyer = allBuyers.filter(buyer => buyer._id !== id);
+        setAllBuyers(remainingBuyer);
+        toast.success('User deleted successfully.');
+      }
+    })
+  }
 
   return (
     <div className='my-10'>
@@ -20,23 +36,23 @@ const AllBuyer = () => {
            <th>Name</th>
            <th>Email</th>
            <th>Role</th>
-           <th>Pay/Delete</th>
+           <th>MakeAdmin/Delete</th>
          </tr>
        </thead>
-      {allBuyers.map(seller =>  <tbody key={seller._id}>
+      {allBuyers.map(buyer =>  <tbody key={buyer._id}>
           <tr>
                <td>
-                <div className="font-bold">{seller.name}</div>
+                <div className="font-bold">{buyer.name}</div>
                </td>
                 <td>
-                  <p>{seller.email}</p>
+                  <p>{buyer.email}</p>
                 </td>
-                <td>{seller.role}</td>
+                <td>{buyer.role}</td>
                 <th>
                   <button className="btn btn-sm bg-green-500 mr-2 border-none">
                     Make Admin
                   </button>
-                  <button className="btn btn-sm bg-red-500 border-none">
+                  <button onClick={() => handleDelete(buyer._id)} className="btn btn-sm bg-red-500 border-none">
                     Delete
                   </button>
                 </th>

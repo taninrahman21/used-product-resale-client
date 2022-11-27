@@ -13,7 +13,7 @@ const Categories = () => {
   ]
   return (
     <div className='w-5/6 mx-auto my-20'>
-    <h2 className='border-l-4 text-3xl border-[#fd8f5f] uppercase pl-2 font-semibold '>Categories</h2>
+    <h2 className='border-l-4 text-2xl border-[#fd8f5f] uppercase pl-2 font-semibold '>Categories</h2>
      <div className='grid grid-cols-3 gap-14 mt-10'>
         {
             categories.map(category => <div className='border rounded-sm px-5 py-3' key={category.id}>

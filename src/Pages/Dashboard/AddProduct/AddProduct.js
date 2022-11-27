@@ -5,6 +5,8 @@ import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useContext } from 'react';
 import { AuthContext } from '../../../contexts/UserContext/UserContext';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 
 const AddProduct = () => {
@@ -12,6 +14,9 @@ const AddProduct = () => {
   const [imageFile, setimageFile] = useState(null);
   const [imageFileError, setImageFileError] = useState('');
   const {user} = useContext(AuthContext);
+  const navigate = useNavigate();
+
+
 
   const fileTypes = ["JPG", "PNG", "GIF"];
   const handleChange = (file) => {
@@ -37,14 +42,15 @@ const AddProduct = () => {
             name: data.productName,
             img: imgData.data.url,
             brand: data.brand,
+            sellerName:"Md Tanin Rahman",
+            sellerEmail: data.email,
+            userVerification: null,
             description: {
               resalePrice: data.resalePrice,
               originalPrice: data.originalPrice,
               yearsOfUse: data.ageOfUse,
               location: data.location,
-              date: format(new Date(), "PP"),
-              sellerName:"Md Tanin Rahman",
-              sellerEmail: data.sellerEmail
+              date: format(new Date(), "PP")
             }
           }
           
@@ -57,9 +63,9 @@ const AddProduct = () => {
             body: JSON.stringify(newProduct)
           }).then(res => res.json())
           .then(data => {
-            console.log(data)
-            if(data.acknowledge){
-              toast.success('Product added successfully.')
+            if(data.acknowledged){
+              toast.success('Product added successfully.');
+              navigate('/dashboard/my-products');
             }
           })
           console.log(newProduct);
@@ -82,7 +88,7 @@ const AddProduct = () => {
            {errors.productName && <p className='text-red-600'>{errors.productName?.message}</p>}
 
           <label className='label'>Your Email</label>
-          <input className='border p-3 w-full' readOnly defaultValue={user?.email} {...register("email")} placeholder='Enter Your Email'/>
+          <input className='border p-3 w-full' readOnly defaultValue={user?.email} {...register("email")}/>
 
           <label className='label'>Brand</label>
           <select {...register('brand')} className="select select-bordered w-full">
