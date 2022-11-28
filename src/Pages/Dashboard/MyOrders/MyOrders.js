@@ -9,7 +9,7 @@ const MyOrders = () => {
   const { data: myorders = [], isLoading } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/myorders?email=${user?.email}`, {
+      const res = await fetch(`https://beche-daw-server.vercel.app/myorders?email=${user?.email}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
           }

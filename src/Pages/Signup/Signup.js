@@ -40,7 +40,7 @@ const Signup = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
-      fetch(`http://localhost:5000/jwt?email=${user.email}`)
+      fetch(`https://beche-daw-server.vercel.app/jwt?email=${user.email}`)
       .then(res => res.json())
       .then(data => {
           console.log(data);

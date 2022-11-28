@@ -6,10 +6,10 @@ import AllBuyer from "../../Pages/Dashboard/AllBuyer/AllBuyer";
 import AllSeller from "../../Pages/Dashboard/AllSeller/AllSeller";
 import DashboardHome from "../../Pages/Dashboard/DashboardHome/DashboardHome";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
+import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import ReportedProducts from "../../Pages/Dashboard/ReportedProducts/ReportedProducts";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
-import MyProducts from "../../Pages/MyProducts/MyProducts";
 import NotFound from "../../Pages/NotFound.js/NotFound";
 import Signup from "../../Pages/Signup/Signup";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/category/:name',
-        loader: ({params}) => fetch(`http://localhost:5000/products?category=${params.name}`),
+        loader: ({params}) => fetch(`https://beche-daw-server.vercel.app/products?category=${params.name}`),
         element: <PrivateRoute><CategoriesProduct></CategoriesProduct></PrivateRoute>
       },
       {

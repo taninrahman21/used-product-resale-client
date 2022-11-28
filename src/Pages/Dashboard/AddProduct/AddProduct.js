@@ -42,7 +42,7 @@ const AddProduct = () => {
         };
 
          // Post add product to DB
-          fetch('http://localhost:5000/products', {
+          fetch('https://beche-daw-server.vercel.app/products', {
             method: 'POST',
             headers: {
               'content-type': 'application/json'

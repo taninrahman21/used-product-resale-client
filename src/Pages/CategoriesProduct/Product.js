@@ -15,7 +15,7 @@ const Product = ({product, handleModal}) => {
   const {data , isLoading } = useQuery({
     queryKey: ['productSeller', sellerEmail],
     queryFn: async() => {
-      const res = await fetch(`http://localhost:5000/users/seller/${sellerEmail}`);
+      const res = await fetch(`https://beche-daw-server.vercel.app/users/seller/${sellerEmail}`);
       const data = await res.json();
       return data;
     }
@@ -29,7 +29,7 @@ const Product = ({product, handleModal}) => {
     if(!user){
       return toast('You have login or register to book a product.');
     }
-    fetch(`http://localhost:5000/products/reported/${id}`, {
+    fetch(`https://beche-daw-server.vercel.app/products/reported/${id}`, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json'

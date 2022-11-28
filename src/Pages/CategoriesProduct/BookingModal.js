@@ -28,7 +28,7 @@ const BookingModal = ({product, setProduct}) => {
       productPrice,
       userPhone
     };
-    fetch('http://localhost:5000/bookedproducts', {
+    fetch('https://beche-daw-server.vercel.app/bookedproducts', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'

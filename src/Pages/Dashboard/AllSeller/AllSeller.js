@@ -8,7 +8,7 @@ const AllSeller = () => {
   const {data: allSellers = [], isLoading, refetch} = useQuery({
     queryKey: ['allSellers'],
     queryFn: async() => {
-      const res = await fetch('http://localhost:5000/users/allsellers', {
+      const res = await fetch('https://beche-daw-server.vercel.app/users/allsellers', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -20,7 +20,7 @@ const AllSeller = () => {
   
   // Varify the user
   const handleVarify = id => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://beche-daw-server.vercel.app/users/${id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -37,7 +37,7 @@ const AllSeller = () => {
     })
   }
   const handleDelete = id => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://beche-daw-server.vercel.app/users/${id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())

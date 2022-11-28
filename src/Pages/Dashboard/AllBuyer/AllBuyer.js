@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const AllBuyer = () => {
   const [allBuyers, setAllBuyers] = useState([]);
   useEffect( () => {
-    axios.get('http://localhost:5000/users/allbuyers', {
+    axios.get('https://beche-daw-server.vercel.app/users/allbuyers', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }
@@ -17,7 +17,7 @@ const AllBuyer = () => {
 
 
   const handleDelete = id => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://beche-daw-server.vercel.app/users/${id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())
