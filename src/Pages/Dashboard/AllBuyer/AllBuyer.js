@@ -6,7 +6,11 @@ import toast from 'react-hot-toast';
 const AllBuyer = () => {
   const [allBuyers, setAllBuyers] = useState([]);
   useEffect( () => {
-    axios.get('http://localhost:5000/users/allbuyers')
+    axios.get('http://localhost:5000/users/allbuyers', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
+    })
     .then((response) => {
       setAllBuyers(response.data)});
   }, [])
@@ -28,7 +32,9 @@ const AllBuyer = () => {
 
   return (
     <div className=''>
-    <div className="overflow-x-auto w-full">
+      {
+        allBuyers.message ? <p className="text-center text-3xl">{allBuyers.message}</p> :
+        <div className="overflow-x-auto w-full">
      <table className="table w-full">
        {/* <!-- head --> */}
        <thead>
@@ -59,7 +65,8 @@ const AllBuyer = () => {
               </tr>
         </tbody>)}
      </table>
-   </div>
+        </div>
+      }
   </div>
   );
 };

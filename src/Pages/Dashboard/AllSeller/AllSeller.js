@@ -8,7 +8,11 @@ const AllSeller = () => {
   const {data: allSellers = [], isLoading, refetch} = useQuery({
     queryKey: ['allSellers'],
     queryFn: async() => {
-      const res = await fetch('http://localhost:5000/users/allsellers');
+      const res = await fetch('http://localhost:5000/users/allsellers', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
       const data = await res.json();
       return data;
     }
@@ -19,6 +23,7 @@ const AllSeller = () => {
     fetch(`http://localhost:5000/users/${id}`, {
       method: 'PATCH',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         'content-type': 'application/json'
       }
     })
@@ -48,6 +53,8 @@ const AllSeller = () => {
   }
   return (
     <div className=''>
+     { 
+       allSellers.message ? <p className="text-center text-3xl">{allSellers.message}</p> :
       <div className="overflow-x-auto w-full">
        <table className="table w-full">
          {/* <!-- head --> */}
@@ -85,7 +92,8 @@ const AllSeller = () => {
                 </tr>
           </tbody>)}
        </table>
-     </div>
+      </div>
+     }
     </div>
   );
 };

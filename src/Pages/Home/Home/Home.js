@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../../contexts/UserContext/UserContext';
 import BookingModal from '../../CategoriesProduct/BookingModal';
 import Loading from '../../Shared/Loading/Loading';
 import Achivement from '../Achivement/Achivement';
@@ -9,6 +12,7 @@ import Banner from '../Banner/Banner';
 import Categories from '../Categories/Categories';
 
 const Home = () => {
+  const {user} = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const {data: advertisedProducts = [], isLoading}= useQuery({
     queryKey: ['advertisedProducts'],
@@ -18,6 +22,13 @@ const Home = () => {
       return data;
     }
   })
+
+  function handleModal(p){
+    if(!user){
+      return toast('You have login or register to book a product.');
+    }
+    setProduct(p);
+  }
   
   if(isLoading){
     return <Loading></Loading>;
@@ -28,7 +39,7 @@ const Home = () => {
       {
         advertisedProducts.length > 0 &&  <AdvertiseItems
          advertisedProducts={advertisedProducts}
-         setProduct={setProduct}
+         handleModal={handleModal}
          ></AdvertiseItems>
       }
       <Categories></Categories>

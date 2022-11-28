@@ -1,7 +1,7 @@
 import React from 'react';
 import Product from '../../CategoriesProduct/Product';
 
-const AdvertiseItems = ({advertisedProducts, setProduct}) => {
+const AdvertiseItems = ({advertisedProducts, handleModal}) => {
 
   return (
     <div className='w-5/6 mx-auto my-20'>
@@ -11,7 +11,7 @@ const AdvertiseItems = ({advertisedProducts, setProduct}) => {
             advertisedProducts.map(product => <Product 
                key={product._id} 
                product={product}
-               setProduct={setProduct}
+               handleModal={handleModal}
                ></Product>)
           }
      </div>

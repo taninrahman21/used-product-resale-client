@@ -27,8 +27,17 @@ const Login = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
-      toast.success('Successfully Login');
-      navigate(from, {replace: true});
+      fetch(`http://localhost:5000/jwt?email=${data.email}`)
+      .then(res => res.json())
+      .then(data => {
+          console.log(data);
+          if (data.accessToken) {
+              console.log(data);
+              localStorage.setItem('accessToken', data.accessToken);
+              navigate(from, {replace: true});
+              toast.success('Successfully Login');
+          }
+      });
     })
     .catch(err => {
       setLoginError(err.message);
@@ -40,7 +49,17 @@ const Login = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
-      navigate(from, {replace: true});
+      fetch(`http://localhost:5000/jwt?email=${user.email}`)
+      .then(res => res.json())
+      .then(data => {
+          console.log(data);
+          if (data.accessToken) {
+              console.log(data);
+              localStorage.setItem('accessToken', data.accessToken);
+              navigate(from, {replace: true});
+              toast.success('Successfully Login');
+          }
+      });
     })
     .catch(err => console.log(err));
   }

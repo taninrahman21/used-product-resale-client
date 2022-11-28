@@ -9,13 +9,18 @@ const MyOrders = () => {
   const { data: myorders = [], isLoading } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5000/myorders?email=${user?.email}`
+      const res = await fetch(`http://localhost:5000/myorders?email=${user?.email}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          }
+        }
       );
       const data = await res.json();
       return data;
-    },
+    }
   });
+
+  // Handle Delete Booked Product
   const handleDelete = id => {
     console.log("delted");
   }
@@ -24,7 +29,10 @@ const MyOrders = () => {
   }
   console.log(myorders);
   return (
-    <div className="my-10 pr-8">
+   <div>
+    {
+      myorders?.message ? <p className="text-center text-3xl">{myorders.message}</p> : 
+      <div className="pr-8">
       {
        myorders.length === 0 ? <p>You didn't book any products.</p>
        :     <div className="overflow-x-auto w-full">
@@ -71,6 +79,8 @@ const MyOrders = () => {
      </div>
       }
     </div>
+    }
+   </div>
   );
 };
 

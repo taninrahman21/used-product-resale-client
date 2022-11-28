@@ -3,11 +3,14 @@ import React from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheckCircle } from 'react-icons/fa';
+import { AuthContext } from '../../contexts/UserContext/UserContext';
 import Loading from '../Shared/Loading/Loading';
 
-const Product = ({product, setProduct}) => {
+const Product = ({product, handleModal}) => {
+  const {user} = useState(AuthContext);
   const {name, img, description, sellerEmail, sellerName } = product;
   const [seeDetails, setSeeDetails] = useState(false);
+  
 
   const {data , isLoading } = useQuery({
     queryKey: ['productSeller', sellerEmail],
@@ -17,13 +20,15 @@ const Product = ({product, setProduct}) => {
       return data;
     }
   })
-  console.log(data);
 
   if(isLoading){
     return <Loading></Loading>;
   }
 
   const handleReport = id => {
+    if(!user){
+      return toast('You have login or register to book a product.');
+    }
     fetch(`http://localhost:5000/products/reported/${id}`, {
       method: 'PATCH',
       headers: {
@@ -32,7 +37,7 @@ const Product = ({product, setProduct}) => {
     })
     .then(res => res.json())
     .then(data => {
-      if(data.modifiedCount > 0){
+      if(data.acknowledged){
         toast.success('Product reported successfully.');
       }
     })
@@ -63,7 +68,7 @@ const Product = ({product, setProduct}) => {
         <label
          htmlFor="booking-modal"
          className='border px-8 py-2 bg-[#fd8f5f] text-white'
-         onClick={() => setProduct(product)}
+         onClick={() => handleModal(product)}
          >Book Now</label>
         </div>
          <div>

@@ -9,6 +9,7 @@ const BookingModal = ({product, setProduct}) => {
   
   const handleBooking = event => {
     event.preventDefault();
+    
     const form = event.target;
     const productName = name;
     const productPrice = description.resalePrice;

@@ -1,15 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../../contexts/UserContext/UserContext';
-import Loading from '../Shared/Loading/Loading';
+import { AuthContext } from '../../../contexts/UserContext/UserContext';
+import Loading from '../../Shared/Loading/Loading';
 
 const MyProducts = () => {
   const {user} = useContext(AuthContext);
   const {data: myProducts = [], isLoading, refetch} = useQuery({
     queryKey: ['myProducts', user?.email],
     queryFn: async() => {
-      const res = await fetch(`http://localhost:5000/myproducts?email=${user?.email}`);
+      const res = await fetch(`http://localhost:5000/myproducts?email=${user?.email}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
+      });
       const data = await res.json();
       return data;
     }
@@ -20,12 +24,12 @@ const MyProducts = () => {
     fetch(`http://localhost:5000/products/${id}`, {
       method: 'PATCH',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         'content-type': 'application/json'
       }
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if(data.modifiedCount > 0){
         toast.success('Product advertised successfully.');
         refetch();
@@ -54,10 +58,10 @@ const MyProducts = () => {
   }
 
   return (
-    <div className='w-full my-14'>
+    <div className='w-full'>
       {
         myProducts.length === 0 ? <p className='text-3xl text-[#fd8f5f] my-10'>You didn't add any products.</p>
-        :  <div className="overflow-x-auto w-[140%] lg:w-full">
+        :  <div className="overflow-x-auto lg:w-full">
         <table className="table w-full">
           {/* <!-- head --> */}
           <thead>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/banner.png';
 import { AuthContext } from '../../contexts/UserContext/UserContext';
@@ -12,6 +13,7 @@ const Signup = () => {
   const {createUser, googleSignIn, updateUser, logOut } = useContext(AuthContext);
   const [signupError, setSignupError] = useState('');
   const navigate = useNavigate();
+
 
   const handleSignup = data => {
     setSignupError('');
@@ -38,6 +40,16 @@ const Signup = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
+      fetch(`http://localhost:5000/jwt?email=${user.email}`)
+      .then(res => res.json())
+      .then(data => {
+          console.log(data);
+          if (data.accessToken) {
+              localStorage.setItem('accessToken', data.accessToken);
+              navigate('/');
+              toast.success('Successfully Login');
+          }
+      });
     })
     .catch(err => {
       setSignupError(err.message);
