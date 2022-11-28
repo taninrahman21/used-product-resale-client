@@ -8,7 +8,7 @@ const AllSeller = () => {
   const {data: allSellers = [], isLoading, refetch} = useQuery({
     queryKey: ['allSellers'],
     queryFn: async() => {
-      const res = await fetch('https://beche-daw-server.vercel.app/users/allsellers', {
+      const res = await fetch('https://used-product-resale-server-smoky.vercel.app/users/allsellers', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
@@ -20,7 +20,7 @@ const AllSeller = () => {
   
   // Varify the user
   const handleVarify = id => {
-    fetch(`https://beche-daw-server.vercel.app/users/${id}`, {
+    fetch(`https://used-product-resale-server-smoky.vercel.app/users/${id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -29,7 +29,6 @@ const AllSeller = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if(data.modifiedCount > 0){
         refetch();
         toast.success('User varified successfully.');
@@ -37,7 +36,7 @@ const AllSeller = () => {
     })
   }
   const handleDelete = id => {
-    fetch(`https://beche-daw-server.vercel.app/users/${id}`, {
+    fetch(`https://used-product-resale-server-smoky.vercel.app/users/${id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())

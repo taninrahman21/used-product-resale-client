@@ -3,11 +3,9 @@ import React from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheckCircle } from 'react-icons/fa';
-import { AuthContext } from '../../contexts/UserContext/UserContext';
 import Loading from '../Shared/Loading/Loading';
 
 const Product = ({product, handleModal}) => {
-  const {user} = useState(AuthContext);
   const {name, img, description, sellerEmail, sellerName } = product;
   const [seeDetails, setSeeDetails] = useState(false);
   
@@ -15,7 +13,7 @@ const Product = ({product, handleModal}) => {
   const {data , isLoading } = useQuery({
     queryKey: ['productSeller', sellerEmail],
     queryFn: async() => {
-      const res = await fetch(`https://beche-daw-server.vercel.app/users/seller/${sellerEmail}`);
+      const res = await fetch(`https://used-product-resale-server-smoky.vercel.app/users/seller/${sellerEmail}`);
       const data = await res.json();
       return data;
     }
@@ -26,10 +24,7 @@ const Product = ({product, handleModal}) => {
   }
 
   const handleReport = id => {
-    if(!user){
-      return toast('You have login or register to book a product.');
-    }
-    fetch(`https://beche-daw-server.vercel.app/products/reported/${id}`, {
+    fetch(`https://used-product-resale-server-smoky.vercel.app/products/reported/${id}`, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json'

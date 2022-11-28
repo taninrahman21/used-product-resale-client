@@ -18,7 +18,10 @@ const CategoriesProduct = () => {
       <h2 className='text-center text-4xl font-bold mb-5'>Latest Available Phones</h2>
       <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10'>
         {
-          products.map(product => <Product handleModal={handleModal} key={product._id} product={product}></Product>)
+          products.map(product => <Product
+             handleModal={handleModal}
+              key={product._id}
+               product={product}></Product>)
         }
       </div>
       {

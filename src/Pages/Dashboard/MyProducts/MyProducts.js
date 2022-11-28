@@ -9,7 +9,7 @@ const MyProducts = () => {
   const {data: myProducts = [], isLoading, refetch} = useQuery({
     queryKey: ['myProducts', user?.email],
     queryFn: async() => {
-      const res = await fetch(`https://beche-daw-server.vercel.app/myproducts?email=${user?.email}`, {
+      const res = await fetch(`https://used-product-resale-server-smoky.vercel.app/myproducts?email=${user?.email}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         }
@@ -21,7 +21,7 @@ const MyProducts = () => {
 
   // Handle Advertised Product
   const handleAdvertise = id => {
-    fetch(`https://beche-daw-server.vercel.app/products/${id}`, {
+    fetch(`https://used-product-resale-server-smoky.vercel.app/products/${id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -41,12 +41,11 @@ const MyProducts = () => {
   const handleDelete = id => {
     const confirmToDelete = window.confirm('Are you sure to delete?');
     if(confirmToDelete){
-    fetch(`https://beche-daw-server.vercel.app/products/${id}`, {
+    fetch(`https://used-product-resale-server-smoky.vercel.app/products/${id}`, {
       method: 'DELETE',
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if(data.deletedCount > 0){
         toast.success('Product deleted successfully.');
         refetch();

@@ -4,10 +4,9 @@ const useToken = email => {
     const [token, setToken] = useState('');
     useEffect(() => {
         if (email) {
-            fetch(`https://beche-daw-server.vercel.app/jwt?email=${email}`)
+            fetch(`https://used-product-resale-server-smoky.vercel.app/jwt?email=${email}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
                     if (data.accessToken) {
                         localStorage.setItem('accessToken', data.accessToken);
                         setToken(data.accessToken);

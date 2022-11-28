@@ -17,7 +17,7 @@ const Home = () => {
   const {data: advertisedProducts = [], isLoading}= useQuery({
     queryKey: ['advertisedProducts'],
     queryFn: async() => {
-      const res = await fetch('https://beche-daw-server.vercel.app/advertisedProducts');
+      const res = await fetch('https://used-product-resale-server-smoky.vercel.app/advertisedProducts');
       const data = await res.json();
       return data;
     }

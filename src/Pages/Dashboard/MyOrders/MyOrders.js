@@ -9,7 +9,7 @@ const MyOrders = () => {
   const { data: myorders = [], isLoading } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
-      const res = await fetch(`https://beche-daw-server.vercel.app/myorders?email=${user?.email}`, {
+      const res = await fetch(`https://used-product-resale-server-smoky.vercel.app/myorders?email=${user?.email}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
           }
@@ -22,12 +22,10 @@ const MyOrders = () => {
 
   // Handle Delete Booked Product
   const handleDelete = id => {
-    console.log("delted");
   }
   if (isLoading) {
     return <Loading></Loading>;
   }
-  console.log(myorders);
   return (
    <div>
     {

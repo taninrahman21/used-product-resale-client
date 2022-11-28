@@ -28,7 +28,7 @@ const BookingModal = ({product, setProduct}) => {
       productPrice,
       userPhone
     };
-    fetch('https://beche-daw-server.vercel.app/bookedproducts', {
+    fetch('https://used-product-resale-server-smoky.vercel.app/bookedproducts', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'

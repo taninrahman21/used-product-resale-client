@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/category/:name',
-        loader: ({params}) => fetch(`https://beche-daw-server.vercel.app/products?category=${params.name}`),
+        loader: ({params}) => fetch(`https://used-product-resale-server-smoky.vercel.app/products?category=${params.name}`),
         element: <PrivateRoute><CategoriesProduct></CategoriesProduct></PrivateRoute>
       },
       {

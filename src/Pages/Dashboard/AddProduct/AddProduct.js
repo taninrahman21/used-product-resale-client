@@ -42,7 +42,7 @@ const AddProduct = () => {
         };
 
          // Post add product to DB
-          fetch('https://beche-daw-server.vercel.app/products', {
+          fetch('https://used-product-resale-server-smoky.vercel.app/products', {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
@@ -92,7 +92,17 @@ const AddProduct = () => {
           {errors.originalPrice && <p className='text-red-600'>{errors.originalPrice?.message}</p>}
 
           <label className='label'>Location</label>
-          <input type='text' className='border p-3 w-full' {...register("location", {required: "Location is required"})} placeholder='Enter Your location'/>
+          <select type='text' className='border p-3 w-full' {...register("location", {required: "Location is required"})} placeholder='Enter Your Location'>
+            <option defaultValue>Dhaka</option>
+            <option>Gazipur</option>
+            <option>Bogura</option>
+            <option>Chittagong</option>
+            <option>Barishal</option>
+            <option>Dinajpur</option>
+            <option>Thakurgaon</option>
+            <option>Kurigram</option>
+            <option>Rangpur</option>
+          </select>
           {errors.location && <p className='text-red-600'>{errors.location?.message}</p>}
 
           <label className='label'>Age of Use</label>

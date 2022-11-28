@@ -7,7 +7,7 @@ const ReportedProducts = () => {
   const {data: reportedProducts = [], isLoading, refetch} = useQuery({
     queryKey: ['reportedProducts'],
     queryFn: async() => {
-      const res = await fetch('https://beche-daw-server.vercel.app/reportedProducts');
+      const res = await fetch('https://used-product-resale-server-smoky.vercel.app/reportedProducts');
       const data = await res.json();
       return data;
     }
@@ -15,12 +15,11 @@ const ReportedProducts = () => {
   const handleDelete = id => {
     const confirmToDelete = window.confirm('Are you sure to delete?');
     if(confirmToDelete){
-    fetch(`https://beche-daw-server.vercel.app/products/${id}`, {
+    fetch(`https://used-product-resale-server-smoky.vercel.app/products/${id}`, {
       method: 'DELETE',
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if(data.deletedCount > 0){
         refetch();
         toast.success('Product deleted successfully.');

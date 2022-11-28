@@ -27,12 +27,10 @@ const Login = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
-      fetch(`https://beche-daw-server.vercel.app/jwt?email=${data.email}`)
+      fetch(`https://used-product-resale-server-smoky.vercel.app/jwt?email=${data.email}`)
       .then(res => res.json())
       .then(data => {
-          console.log(data);
           if (data.accessToken) {
-              console.log(data);
               localStorage.setItem('accessToken', data.accessToken);
               navigate(from, {replace: true});
               toast.success('Successfully Login');
@@ -49,12 +47,10 @@ const Login = () => {
       const user = result.user;
       const role = 'Buyer';
       saveUser(user.displayName, user.email, role);
-      fetch(`https://beche-daw-server.vercel.app/jwt?email=${user.email}`)
+      fetch(`https://used-product-resale-server-smoky.vercel.app/jwt?email=${user.email}`)
       .then(res => res.json())
       .then(data => {
-          console.log(data);
           if (data.accessToken) {
-              console.log(data);
               localStorage.setItem('accessToken', data.accessToken);
               navigate(from, {replace: true});
               toast.success('Successfully Login');
@@ -82,7 +78,7 @@ const Login = () => {
           {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
 
           <label className='label'>Password</label>
-          <input className='border p-3 w-full' {...register("password",
+          <input type='password' className='border p-3 w-full' {...register("password",
           {required: "Password is required."}
           )} placeholder='Password'/>
           {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
