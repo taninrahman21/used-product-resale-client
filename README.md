@@ -1,5 +1,8 @@
 # Study Trend Website #
-Live Site Link: ()
+Live Site Link: (https://beche-daw.web.app/)
+
+### Admin email:  success@hobe.com
+### Admin password:  taninrah
 
 ## Features
 - Use Context Api
